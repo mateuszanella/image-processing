@@ -1,0 +1,20 @@
+version: '3'
+
+tasks:
+  init:
+    cmds:
+      - npm init -y
+      - npm install tailwindcss
+      - npx tailwindcss init
+      - npx tailwindcss build -o static/css/tailwind.css
+  build:
+    cmds:
+      - go build -o app main.go
+  run:
+    cmds:
+      - ./app
+  deploy:
+    cmds:
+      - task: init
+      - task: build
+      - task: run
