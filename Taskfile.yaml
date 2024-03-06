@@ -6,10 +6,10 @@ tasks:
       - npm init -y
       - npm install tailwindcss
       - npx tailwindcss init
-      - npx tailwindcss build -o static/css/tailwind.css
+      - npx tailwindcss build -o internal/assets/css/tailwind.css
   build:
     cmds:
-      - go build -o app main.go
+      - go build -o app ./cmd/server/main.go
   run:
     cmds:
       - ./app
