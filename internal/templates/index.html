@@ -8,18 +8,39 @@
         crossorigin="anonymous"></script>
 </head>
 
-<body>
-    <h1>{{.PageTitle}}</h1>
-    <ul>
-        {{range .Todos}}
-        
-            {{if .Done}}
-                <li class="done">{{.Title}}</li>
-            {{else}}
-                <li>{{.Title}}</li>
-            {{end}}
-        {{end}}
-    </ul>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+        <h1 class="text-2xl font-bold mb-4">Color Converter</h1>
+        <form hx-post="/convert" hx-trigger="submit" hx-target="#outputColor">
+            <div class="mb-4">
+                <label class="block text-gray-700">Input Format</label>
+                <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                        id="inputForm">
+                    <option>HEX</option>
+                    <option>RGB</option>
+                    <option>HSL</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Output Format</label>
+                <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" 
+                        id="outputForm">
+                    <option>HEX</option>
+                    <option>RGB</option>
+                    <option>HSL</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Input Color</label>
+                <input type="text" name="inputColor" placeholder="Enter color" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Output Color</label>
+                <input type="text" id="outputColor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" readonly>
+            </div>
+            <button type="submit" class="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">Convert</button>
+        </form>
+    </div>
 </body>
 
 </html>
