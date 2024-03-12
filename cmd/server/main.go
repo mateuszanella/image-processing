@@ -1,42 +1,35 @@
 package main
 
 import (
-	"fmt"
+	"html/template"
+	"net/http"
 )
 
-type Todo struct {
-	Title string
-	Done  bool
-}
-
-type TodoPageData struct {
-	PageTitle string
-	Todos     []Todo
-}
-
 func main() {
-	red, green, blue, err := HexToRGB("#ff0000")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(red, green, blue)
+	tmpl := template.Must(template.ParseFiles("internal/templates/index.html"))
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		data := []string{"Hello", "World"}
+		tmpl.Execute(w, data)
+	})
+	http.ListenAndServe(":80", nil)
 
-	// tmpl := template.Must(template.ParseFiles("internal/templates/index.html"))
-	// http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-	// 	data := TodoPageData{
-	// 		PageTitle: "My TODO list",
-	// 		Todos: []Todo{
-	// 			{Title: "Task 1", Done: false},
-	// 			{Title: "Task 2", Done: true},
-	// 			{Title: "Task 3", Done: true},
-	// 		},
-	// 	}
-	// 	tmpl.Execute(w, data)
-	// })
-	// http.ListenAndServe(":80", nil)
+	http.HandleFunc("/convertColor", func(w http.ResponseWriter, r *http.Request) {
+		// 	color := r.FormValue("color")
 
-	// http.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("static"))))
+		// 	red, green, blue, err := HexToRGB(color)
+		// 	if err != nil {
+		// 		http.Error(w, err.Error(), http.StatusBadRequest)
+		// 		return
+		// 	}
 
-	// http.ListenAndServe(":8080", nil)
+		// 	html := fmt.Sprintf(`
+		//     <div>RGB: %d, %d, %d</div>
+		//     <div>HEX: %s</div>
+		//     <div>HSL: %s</div>
+		// `, red, green, blue, RGBToHex(red, green, blue), RGBToHSL(red, green, blue))
+
+		// 	w.Write([]byte(html))
+	})
+
+	http.ListenAndServe(":8080", nil)
 }
